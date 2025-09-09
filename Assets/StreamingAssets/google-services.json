@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "123456789012",
+    "firebase_url": "https://brainiac-learning-default-rtdb.firebaseio.com",
+    "project_id": "brainiac-learning",
+    "storage_bucket": "brainiac-learning.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123456789012:android:abcdef123456789",
+        "android_client_info": {
+          "package_name": "com.brainiaclearning.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123456789012-abcdefghijklmnop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyExample_API_Key_Replace_With_Real_Key"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123456789012-abcdefghijklmnop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
