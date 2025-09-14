@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#4f46e5" />
+    <title>Brainiac - Student Portal</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/feathericons/feather/icons/cpu.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script defer src="js/app.js"></script>
+  <script defer src="js/auth.js"></script>
+    <script defer src="js/i18n.js"></script>
+    <script defer src="js/gamification.js"></script>
+  <script defer src="js/lessons.js"></script>
+  <script defer src="js/gyani.js"></script>
+    <script defer src="js/offline.js"></script>
+  </head>
+  <body class="dark:text-gray-200 text-gray-800">
+    <div class="background-ripples">
+      <div class="ripple r1"></div>
+      <div class="ripple r2"></div>
+      <div class="ripple r3"></div>
+    </div>
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl relative z-10">
+      <header class="flex justify-between items-center mb-8">
+        <div class="typewriter">
+          <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white inline">Brainiac</h1>
+          <span id="logo-cursor" class="text-2xl md:text-3xl font-extrabold">|</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="games.html" class="stylish-btn text-sm py-2">Games</a>
+          <a href="teacher.html" class="stylish-btn text-sm py-2">Teacher</a>
+          <div id="theme-icon-container" class="cursor-pointer" title="Toggle Theme">
+            <svg id="sun-icon" class="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg id="moon-icon" class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </div>
+          <div class="relative">
+            <button id="language-switcher-btn" class="flex items-center space-x-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm">
+              <i class="fa-solid fa-globe"></i>
+              <span id="lang-btn-text">English</span>
+            </button>
+            <select id="language-switcher" class="absolute inset-0 opacity-0 cursor-pointer">
+              <option value="en">English</option>
+              <option value="hi">हिन्दी</option>
+            </select>
+          </div>
+          <div id="auth-menu"></div>
+        </div>
+      </header>
+
+      <section id="home" class="page active">
+        <div class="text-left mb-12">
+        <p class="text-indigo-400 font-semibold">BrainiacSTEM - Empowering Futures</p>
+  <h2 class="text-4xl md:text-5xl font-extrabold mt-2 gradient-text" data-lang-key="welcome_title">Welcome to Brainiac Platform</h2>
+        <p class="mt-4 text-lg text-gray-500 dark:text-gray-400 max-w-2xl" data-lang-key="welcome_subtitle">Empowering rural learners with interactive games, progress tracking, and motivating achievement badges.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <a class="portal-card" href="#student">
+          <div class="portal-card-content">
+            <i class="fa-solid fa-user-graduate"></i>
+            <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Student Portal</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-2 flex-grow text-center">Interactive lessons, XP rewards & mini challenges to accelerate learning.</p>
+            <span class="mt-6 w-full py-2 bg-green-500/20 text-green-300 rounded-lg font-semibold text-center">Explore</span>
+          </div>
+        </a>
+        <a class="portal-card" href="games.html">
+          <div class="portal-card-content">
+            <i class="fa-solid fa-gamepad"></i>
+            <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Games Hub</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-2 flex-grow text-center">Math puzzles & memory games build core STEM skills through play.</p>
+            <span class="mt-6 w-full py-2 bg-orange-500/20 text-orange-300 rounded-lg font-semibold text-center">Play</span>
+          </div>
+        </a>
+        <a class="portal-card" href="teacher.html">
+          <div class="portal-card-content">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Teacher Portal</h3>
+            <p class="text-gray-500 dark:text-gray-400 text-sm mt-2 flex-grow text-center">Monitor progress, analyze engagement, celebrate achievements.</p>
+            <span class="mt-6 w-full py-2 bg-sky-500/20 text-sky-300 rounded-lg font-semibold text-center">Open</span>
+          </div>
+        </a>
+        </div>
+        <hr class="my-10 border-slate-800"/>
+      </section>
+
+      <section id="student" class="page">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+  <h2 id="student-welcome-title" class="text-3xl font-bold mb-2 gradient-text">Welcome, Learner!</h2>
+        <p class="text-gray-500 dark:text-gray-400 mb-8">Your personalized learning journey starts here.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="tts-toggle" class="stylish-btn text-sm py-2" aria-pressed="false" title="Toggle Text-to-Speech">
+              <i class="fa-solid fa-volume-xmark"></i>
+              <span class="hidden sm:inline">TTS Off</span>
+            </button>
+            <div class="relative">
+              <button id="tts-menu-btn" class="stylish-btn text-sm py-2" title="TTS Preferences"><i class="fa-solid fa-sliders"></i></button>
+              <div id="tts-menu" class="hidden absolute right-0 top-full mt-2 w-56 glass-container rounded-xl p-3 z-50">
+                <p class="text-xs text-slate-400 mb-2">Speak categories</p>
+                <label class="flex items-center justify-between text-sm py-1">
+                  <span>Chat</span>
+                  <input id="tts-cat-chat" type="checkbox" class="h-4 w-4" />
+                </label>
+                <label class="flex items-center justify-between text-sm py-1">
+                  <span>Lessons</span>
+                  <input id="tts-cat-lessons" type="checkbox" class="h-4 w-4" />
+                </label>
+                <label class="flex items-center justify-between text-sm py-1">
+                  <span>Games</span>
+                  <input id="tts-cat-games" type="checkbox" class="h-4 w-4" />
+                </label>
+                <label class="flex items-center justify-between text-sm py-1">
+                  <span>System</span>
+                  <input id="tts-cat-system" type="checkbox" class="h-4 w-4" />
+                </label>
+              </div>
+            </div>
+            <a href="#home" class="stylish-btn text-sm py-2">Back</a>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-star text-yellow-400 text-3xl"></i><div><p class="text-gray-400 text-sm">XP Points</p><p id="student-xp" class="text-2xl font-bold dark:text-white">0</p></div></div>
+          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-fire text-orange-500 text-3xl"></i><div><p class="text-gray-400 text-sm">Daily Streak</p><p id="student-streak" class="text-2xl font-bold dark:text-white">0 Days</p></div></div>
+          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-trophy text-purple-400 text-3xl"></i><div><p class="text-gray-400 text-sm">Badges Earned</p><p id="student-badges" class="text-2xl font-bold dark:text-white">0</p></div></div>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold mb-4 gradient-text">Your Learning Path</h3>
+          <div id="learning-path-container" class="space-y-4"></div>
+          <div id="leaderboard" class="glass-container rounded-xl p-4 mt-6">
+            <h4 class="font-bold mb-3">Local Leaderboard</h4>
+            <ol id="leaderboard-list" class="list-decimal pl-5 text-sm text-gray-300"></ol>
+          </div>
+          <div id="badges-panel" class="glass-container rounded-xl p-4 mt-6">
+            <h4 class="font-bold mb-3">Badges</h4>
+            <div id="badges-grid"></div>
+          </div>
+          <div id="offline-downloads" class="glass-container rounded-xl p-4 mt-6">
+            <h4 class="font-bold mb-3">Offline Lessons</h4>
+            <div id="downloads-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="text-center mt-12 text-gray-500 text-sm">© 2025 The Fractals<sup>TM</sup>. All Rights Reserved.</footer>
+    </div>
+  </body>
+</html>

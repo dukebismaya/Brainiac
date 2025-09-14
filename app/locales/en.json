@@ -1,0 +1,17 @@
+{
+  "welcome_title": "Welcome to Brainiac Platform",
+  "welcome_subtitle": "Empowering rural learners with interactive games, progress tracking, and motivating achievement badges.",
+  "start_game": "Learn More",
+  "teacher_dashboard": "Dashboard",
+  "physics_quiz": "Physics Quiz",
+  "score": "Score",
+  "next_question": "Next Question",
+  "restart_game": "Play Again",
+  "back_to_home": "Back to Home",
+  "progress_dashboard": "Progress Dashboard",
+  "games_played": "Games Played",
+  "high_score": "High Score",
+  "correct": "Correct!",
+  "wrong": "Not Quite!",
+  "quiz_complete": "Quiz Complete!"
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Brainiac - Fun STEM Learning",
+  "short_name": "Brainiac",
+  "description": "Empowering rural learners with interactive games, progress tracking, and motivating achievement badges.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "https://cdn.jsdelivr.net/gh/feathericons/feather/icons/cpu.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn.jsdelivr.net/gh/feathericons/feather/icons/cpu.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/GoogleChromeLabs/sample-pie-shop/main/public/icons/maskable_icon_x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
