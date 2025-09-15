@@ -142,6 +142,15 @@
     history.push({ role:'user', text }); history.push({ role:'assistant', text: reply }); saveChat(history);
   }
 
+  // Simple programmatic ask for other modules (returns text)
+  async function ask(question){
+    const settings = loadSettings();
+    const history = loadChat();
+    const reply = await callAI(settings, history, question);
+    history.push({ role:'user', text: question }); history.push({ role:'assistant', text: reply }); saveChat(history);
+    return reply;
+  }
+
   function isOpen(el){ return el && getComputedStyle(el).display !== 'none' && !el.classList.contains('closing'); }
   function prefersReduced(){ try{ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(_){ return false; } }
   function openPanel(){
@@ -204,6 +213,8 @@
       if (e.key==='Escape'){ closePanel(); }
     });
   }
+  // Expose a small API
+  window.Gyani = { ask };
 
   function style(){
     const css = `

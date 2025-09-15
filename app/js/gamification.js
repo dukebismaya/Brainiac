@@ -10,10 +10,10 @@
     lessons: {
       order: ['physics-1','chemistry-1','biology-1','math-1'],
       meta: {
-        'physics-1': { title: 'Intro to Forces', unlocks: ['chemistry-1'] },
-        'chemistry-1': { title: 'Periodic Table', unlocks: ['biology-1'] },
-        'biology-1': { title: 'Cells & Organisms', unlocks: ['math-1'] },
-        'math-1': { title: 'Basics of Algebra', unlocks: [] }
+        'physics-1': { title: 'Intro to Forces', unlocks: ['chemistry-1'], grade: '6-7' },
+        'chemistry-1': { title: 'Periodic Table', unlocks: ['biology-1'], grade: '6-7' },
+        'biology-1': { title: 'Cells & Organisms', unlocks: ['math-1'], grade: '6-7' },
+        'math-1': { title: 'Basics of Algebra', unlocks: [], grade: '6-7' }
       }
     },
     badges: {
@@ -127,13 +127,27 @@
     const u = ensureUser(userId);
     return { xp:u.xp, level:u.level, badges:u.badges, streak:u.streak, learningPath:u.learningPath, stats:u.stats };
   }
+  function getLessonMeta(lessonId){ return state.lessons.meta[lessonId]; }
+  function getLessonsMeta(){ return state.lessons.meta; }
+
+  // Track last opened lesson per user (for Continue CTA)
+  const LAST_OPEN_KEY = (userId) => `brainiac_last_lesson_${userId}`;
+  function setLastOpenedLesson(userId, lessonId){ try{ localStorage.setItem(LAST_OPEN_KEY(userId), lessonId); }catch(e){} }
+  function getLastOpenedLesson(userId){ try{ return localStorage.getItem(LAST_OPEN_KEY(userId)); }catch(e){ return null; } }
+  function getNextUnlockedLesson(userId){
+    const u = ensureUser(userId);
+    // Prefer first unlocked that is not completed
+    const next = (u.learningPath||[]).find(l=> l.status==='unlocked');
+    return next ? next.id : (u.learningPath||[]).find(l=> l.status!=='locked')?.id || null;
+  }
 
   function currentUserId(){ return localStorage.getItem(SESSION_KEY) || 'guest'; }
 
   function dispatch(type, detail){ window.dispatchEvent(new CustomEvent(`gamification:${type}`, { detail })); }
 
   // Public API
-  window.Gamification = { addXP, awardBadge, recordStreak, completeLesson, recordGame, getUserSummary, currentUserId };
+  function getBadgesMeta(){ return (loadState()?.badges) || defaultState().badges; }
+  window.Gamification = { addXP, awardBadge, recordStreak, completeLesson, recordGame, getUserSummary, currentUserId, setLastOpenedLesson, getLastOpenedLesson, getNextUnlockedLesson, getLessonMeta, getLessonsMeta, getBadgesMeta };
 
   // Minimal UI binding for Student Portal (if present)
   let lastUpdatedLessonId = null;
@@ -151,8 +165,10 @@
     const badgesEl = document.getElementById('student-badges'); if (badgesEl) badgesEl.textContent = (s.badges||[]).length;
     const lp = document.getElementById('learning-path-container'); if (lp){
       lp.innerHTML = '';
+      const filter = localStorage.getItem('brainiac_grade_filter') || 'all';
       s.learningPath.forEach(item=>{
         const meta = state.lessons.meta[item.id]; if (!meta) return;
+        if (filter!=='all' && meta.grade && meta.grade!==filter) return;
         const isLocked = item.status==='locked'; const isCompleted = item.status==='completed';
         const best = (item.bestScore !== undefined) ? item.bestScore : (item.score || 0);
         const current = (item.lastScore !== undefined) ? item.lastScore : (item.score || 0);
@@ -197,6 +213,9 @@
       const t = e.target.closest('.start-btn');
       if (!t) return;
       const id = t.getAttribute('data-lesson-id');
+      const uid = currentUserId();
+      setLastOpenedLesson(uid, id);
+      window.dispatchEvent(new CustomEvent('gamification:continue', { detail: { userId: uid, lessonId: id }}));
       // If the Lessons modal is available, let it handle opening the quiz
       if (window.Lessons && typeof window.Lessons.open === 'function'){
         return; // lessons.js will intercept and open the modal
@@ -211,6 +230,7 @@
     window.addEventListener('gamification:lesson', (e)=>{ lastUpdatedLessonId = e.detail?.lessonId || null; renderStudent(); setTimeout(()=>{ lastUpdatedLessonId=null; }, 1000); });
     window.addEventListener('auth:login', renderStudent);
     window.addEventListener('auth:logout', renderStudent);
+    window.addEventListener('gamification:continue', ()=>{});
     document.addEventListener('DOMContentLoaded', renderStudent);
   }
   attachEvents();

@@ -7,7 +7,7 @@
   - Auto-updates via skipWaiting/clients.claim
 */
 
-const VERSION = 'v1.1.0';
+const VERSION = 'v1.2.0';
 const PRECACHE = `precache-${VERSION}`;
 const RUNTIME = `runtime-${VERSION}`;
 
@@ -15,14 +15,19 @@ const RUNTIME = `runtime-${VERSION}`;
 const PRECACHE_URLS = [
   './',
   './index.html',
+  './student.html',
   './games.html',
   './teacher.html',
   './css/styles.css',
   './js/app.js',
+  './js/auth.js',
   './js/gamification.js',
   './js/games.js',
   './js/teacher.js',
   './js/i18n.js',
+  './js/lessons.js',
+  './js/gyani.js',
+  './js/doubts.js',
   './js/offline.js',
   './js/charts.js',
   './manifest.json',
@@ -107,13 +112,13 @@ self.addEventListener('fetch', (event) => {
           const fresh = await fetch(request);
           const cache = await caches.open(RUNTIME);
           const url = new URL(request.url);
-          const path = url.pathname.endsWith('games.html') ? './games.html' : url.pathname.endsWith('teacher.html') ? './teacher.html' : './index.html';
+          const path = url.pathname.endsWith('student.html') ? './student.html' : url.pathname.endsWith('games.html') ? './games.html' : url.pathname.endsWith('teacher.html') ? './teacher.html' : './index.html';
           cache.put(path, fresh.clone());
           return fresh;
         } catch (err) {
           const cache = await caches.open(PRECACHE);
           const url = new URL(request.url);
-          const path = url.pathname.endsWith('games.html') ? './games.html' : url.pathname.endsWith('teacher.html') ? './teacher.html' : './index.html';
+          const path = url.pathname.endsWith('student.html') ? './student.html' : url.pathname.endsWith('games.html') ? './games.html' : url.pathname.endsWith('teacher.html') ? './teacher.html' : './index.html';
           const cached = await cache.match(path) || await caches.match('./index.html');
           return cached || new Response('<h1>Offline</h1><p>The app shell is unavailable offline.</p>', { headers: { 'Content-Type': 'text/html' }, status: 503 });
         }

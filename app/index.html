@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#4f46e5" />
-    <title>Brainiac - Student Portal</title>
+  <title>Brainiac - Welcome</title>
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/feathericons/feather/icons/cpu.png" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -61,7 +61,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <a class="portal-card" href="#student">
+        <a class="portal-card" href="student.html" data-role="student">
           <div class="portal-card-content">
             <i class="fa-solid fa-user-graduate"></i>
             <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Student Portal</h3>
@@ -77,7 +77,7 @@
             <span class="mt-6 w-full py-2 bg-orange-500/20 text-orange-300 rounded-lg font-semibold text-center">Play</span>
           </div>
         </a>
-        <a class="portal-card" href="teacher.html">
+  <a class="portal-card" href="teacher.html" data-role="teacher">
           <div class="portal-card-content">
             <i class="fa-solid fa-chalkboard-user"></i>
             <h3 class="text-xl font-bold mt-4 text-gray-900 dark:text-white">Teacher Portal</h3>
@@ -88,65 +88,7 @@
         </div>
         <hr class="my-10 border-slate-800"/>
       </section>
-
-      <section id="student" class="page">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-  <h2 id="student-welcome-title" class="text-3xl font-bold mb-2 gradient-text">Welcome, Learner!</h2>
-        <p class="text-gray-500 dark:text-gray-400 mb-8">Your personalized learning journey starts here.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <button id="tts-toggle" class="stylish-btn text-sm py-2" aria-pressed="false" title="Toggle Text-to-Speech">
-              <i class="fa-solid fa-volume-xmark"></i>
-              <span class="hidden sm:inline">TTS Off</span>
-            </button>
-            <div class="relative">
-              <button id="tts-menu-btn" class="stylish-btn text-sm py-2" title="TTS Preferences"><i class="fa-solid fa-sliders"></i></button>
-              <div id="tts-menu" class="hidden absolute right-0 top-full mt-2 w-56 glass-container rounded-xl p-3 z-50">
-                <p class="text-xs text-slate-400 mb-2">Speak categories</p>
-                <label class="flex items-center justify-between text-sm py-1">
-                  <span>Chat</span>
-                  <input id="tts-cat-chat" type="checkbox" class="h-4 w-4" />
-                </label>
-                <label class="flex items-center justify-between text-sm py-1">
-                  <span>Lessons</span>
-                  <input id="tts-cat-lessons" type="checkbox" class="h-4 w-4" />
-                </label>
-                <label class="flex items-center justify-between text-sm py-1">
-                  <span>Games</span>
-                  <input id="tts-cat-games" type="checkbox" class="h-4 w-4" />
-                </label>
-                <label class="flex items-center justify-between text-sm py-1">
-                  <span>System</span>
-                  <input id="tts-cat-system" type="checkbox" class="h-4 w-4" />
-                </label>
-              </div>
-            </div>
-            <a href="#home" class="stylish-btn text-sm py-2">Back</a>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-star text-yellow-400 text-3xl"></i><div><p class="text-gray-400 text-sm">XP Points</p><p id="student-xp" class="text-2xl font-bold dark:text-white">0</p></div></div>
-          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-fire text-orange-500 text-3xl"></i><div><p class="text-gray-400 text-sm">Daily Streak</p><p id="student-streak" class="text-2xl font-bold dark:text-white">0 Days</p></div></div>
-          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-trophy text-purple-400 text-3xl"></i><div><p class="text-gray-400 text-sm">Badges Earned</p><p id="student-badges" class="text-2xl font-bold dark:text-white">0</p></div></div>
-        </div>
-        <div>
-          <h3 class="text-2xl font-bold mb-4 gradient-text">Your Learning Path</h3>
-          <div id="learning-path-container" class="space-y-4"></div>
-          <div id="leaderboard" class="glass-container rounded-xl p-4 mt-6">
-            <h4 class="font-bold mb-3">Local Leaderboard</h4>
-            <ol id="leaderboard-list" class="list-decimal pl-5 text-sm text-gray-300"></ol>
-          </div>
-          <div id="badges-panel" class="glass-container rounded-xl p-4 mt-6">
-            <h4 class="font-bold mb-3">Badges</h4>
-            <div id="badges-grid"></div>
-          </div>
-          <div id="offline-downloads" class="glass-container rounded-xl p-4 mt-6">
-            <h4 class="font-bold mb-3">Offline Lessons</h4>
-            <div id="downloads-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-          </div>
-        </div>
-      </section>
+      
 
       <footer class="text-center mt-12 text-gray-500 text-sm">© 2025 The Fractals<sup>TM</sup>. All Rights Reserved.</footer>
     </div>

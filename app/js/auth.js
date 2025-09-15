@@ -97,6 +97,34 @@
     }
   }
 
+  // Role chooser modal
+  function ensureRoleChooserUI(){
+    if (document.getElementById('role-chooser-modal')) return;
+    const html = `
+    <div id="role-chooser-modal" class="auth-modal" style="display:none;">
+      <div class="auth-card">
+        <header class="auth-header"><div class="title"><i class="fa-solid fa-user-gear"></i><span>Choose your role</span></div><button id="role-chooser-close" class="x"><i class="fa-solid fa-xmark"></i></button></header>
+        <div class="auth-body">
+          <div class="grid gap-3">
+            <button class="stylish-btn justify-center" data-role-select="student"><i class="fa-solid fa-user-graduate"></i><span>I am Student</span></button>
+            <button class="stylish-btn justify-center" data-role-select="teacher"><i class="fa-solid fa-chalkboard-user"></i><span>I am Teacher</span></button>
+            <button class="stylish-btn justify-center" data-role-select="guest"><i class="fa-solid fa-user"></i><span>Continue as Guest</span></button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    document.body.insertAdjacentHTML('beforeend', html);
+  }
+  function showRoleChooser(){ ensureRoleChooserUI(); const m=document.getElementById('role-chooser-modal'); if(m) m.style.display='flex'; }
+  function hideRoleChooser(){ const m=document.getElementById('role-chooser-modal'); if(m) m.style.display='none'; }
+  function applyRoleAndNavigate(kind){
+    try{
+      if (kind==='guest'){ window.Auth?.logout?.(); localStorage.setItem('brainiac_role','student'); hideRoleChooser(); window.location.href='student.html'; return; }
+      if (kind==='student'){ localStorage.setItem('brainiac_role','student'); hideRoleChooser(); window.location.href='student.html'; return; }
+      if (kind==='teacher'){ localStorage.setItem('brainiac_role','teacher'); hideRoleChooser(); window.location.href='teacher.html'; return; }
+    }catch(_){ }
+  }
+
   function bind(){
     document.addEventListener('click', async (e)=>{
       if (e.target.closest('#auth-open')){ ensureUI(); document.getElementById('auth-modal').style.display='flex'; return; }
@@ -106,16 +134,20 @@
       const userBtn = e.target.closest('#auth-user-btn');
       if (userBtn){ const menu = document.getElementById('auth-user-menu'); if(menu){ menu.classList.toggle('hidden'); menu.style.display = menu.classList.contains('hidden')? 'none':'block'; } return; }
       if (!e.target.closest('#auth-user-menu')){ const menu=document.getElementById('auth-user-menu'); if(menu){ menu.classList.add('hidden'); menu.style.display='none'; } }
+      if (e.target.closest('#role-chooser-close')){ hideRoleChooser(); return; }
+      const roleBtn = e.target.closest('[data-role-select]'); if (roleBtn){ const role = roleBtn.getAttribute('data-role-select'); applyRoleAndNavigate(role); return; }
     });
 
     document.addEventListener('submit', async (e)=>{
       if (e.target && e.target.id==='auth-form-login'){
         e.preventDefault(); const u=document.getElementById('auth-login-username').value; const p=document.getElementById('auth-login-password').value; const err=document.getElementById('auth-login-error'); err.textContent='';
-        try{ await login(u,p); document.getElementById('auth-modal').style.display='none'; renderAuthMenu(); }catch(ex){ err.textContent = ex.message || 'Login failed.'; }
+        try{ await login(u,p); document.getElementById('auth-modal').style.display='none'; renderAuthMenu(); if (!localStorage.getItem('brainiac_role')) showRoleChooser(); }
+        catch(ex){ err.textContent = ex.message || 'Login failed.'; }
       }
       if (e.target && e.target.id==='auth-form-signup'){
         e.preventDefault(); const u=document.getElementById('auth-signup-username').value; const p=document.getElementById('auth-signup-password').value; const err=document.getElementById('auth-signup-error'); err.textContent='';
-        try{ await signup(u,p); document.getElementById('auth-modal').style.display='none'; renderAuthMenu(); }catch(ex){ err.textContent = ex.message || 'Signup failed.'; }
+        try{ await signup(u,p); document.getElementById('auth-modal').style.display='none'; renderAuthMenu(); if (!localStorage.getItem('brainiac_role')) showRoleChooser(); }
+        catch(ex){ err.textContent = ex.message || 'Signup failed.'; }
       }
     });
 
@@ -129,7 +161,7 @@
   }
 
   // Public API
-  window.Auth = { signup, login, logout, currentUser, renderAuthMenu };
+  window.Auth = { signup, login, logout, currentUser, renderAuthMenu, showRoleChooser };
 
-  document.addEventListener('DOMContentLoaded', ()=>{ ensureUI(); bind(); renderAuthMenu(); });
+  document.addEventListener('DOMContentLoaded', ()=>{ ensureUI(); ensureRoleChooserUI(); bind(); renderAuthMenu(); });
 })();

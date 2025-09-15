@@ -16,6 +16,7 @@
     <script defer src="js/i18n.js"></script>
     <script defer src="js/teacher.js"></script>
     <script defer src="js/charts.js"></script>
+    <script defer src="js/doubts.js"></script>
   <script defer src="js/gyani.js"></script>
     <script defer src="js/offline.js"></script>
   </head>
@@ -27,6 +28,8 @@
           <a href="#" data-back="history" class="stylish-btn text-sm py-2">Back</a>
           <a href="index.html" class="stylish-btn text-sm py-2">Home</a>
           <a href="games.html" class="stylish-btn text-sm py-2">Games</a>
+          <a href="student.html" class="stylish-btn text-sm py-2 only-teacher">Student</a>
+          <button data-action="switch-role" class="stylish-btn text-sm py-2" title="Switch Role">Switch Role</button>
           <span id="theme-icon-container" class="inline-block cursor-pointer align-middle ml-2" title="Toggle Theme">
             <svg id="sun-icon" class="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a 4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             <svg id="moon-icon" class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -45,8 +48,36 @@
         <div class="lg:col-span-2">
           <h3 class="text-2xl font-bold mb-4 dark:text-white">Class Roster</h3>
           <div id="student-list-container" class="glass-container rounded-xl p-4 space-y-2"></div>
+          <div class="glass-container rounded-xl p-4 mt-6">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="text-2xl font-bold dark:text-white">Student Doubts</h3>
+              <div class="hidden sm:flex items-center gap-1 text-xs" id="teacher-doubt-filters">
+                <button class="chip" data-tdfilter="all">All</button>
+                <button class="chip" data-tdfilter="open">Open</button>
+                <button class="chip" data-tdfilter="answered">Answered</button>
+                <button class="chip" data-tdfilter="mine">Mine</button>
+              </div>
+            </div>
+            <div id="teacher-doubts-list" class="space-y-2"></div>
+          </div>
+
+          <!-- Doubt Detail Modal (shared style) -->
+          <div id="teacher-doubt-modal" class="game-modal">
+            <div class="modal-card w-full max-w-2xl">
+              <header>
+                <h5 id="teacher-doubt-modal-title" class="text-lg font-bold">Doubt</h5>
+                <button id="teacher-doubt-modal-close" class="stylish-btn text-xs py-1">Close</button>
+              </header>
+              <div class="glow-divider mb-2"></div>
+              <div id="teacher-doubt-modal-body" class="space-y-3"></div>
+            </div>
+          </div>
         </div>
         <div id="teacher-tools-container">
+          <div class="flex justify-end items-center mb-2">
+            <button id="export-csv-btn" class="stylish-btn text-xs py-1"><i class="fa-solid fa-file-csv mr-1"></i>Export CSV</button>
+            <button id="award-top-btn" class="stylish-btn text-xs py-1 ml-2"><i class="fa-solid fa-trophy mr-1"></i>Award Top</button>
+          </div>
           <div class="flex space-x-1 glass-container rounded-t-xl p-1 mb-0">
             <button class="tab-btn active" data-tab="assign"><i class="fa-solid fa-paper-plane mr-2"></i>Assign Content</button>
             <button class="tab-btn" data-tab="create"><i class="fa-solid fa-plus-circle mr-2"></i>Create Lesson</button>

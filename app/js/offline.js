@@ -37,7 +37,7 @@
       panel = document.createElement('div');
       panel.id = 'offline-downloads';
       panel.className = 'glass-container rounded-xl p-4 mt-6';
-      panel.innerHTML = '<h4 class="font-bold mb-3">Offline Lessons</h4><div id="downloads-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>';
+      panel.innerHTML = '<div class="flex items-center justify-between mb-3"><h4 class="font-bold">Offline Lessons</h4><div class="space-x-2"><button id="dl-all" class="stylish-btn text-xs py-1">Download All</button><button id="rm-all" class="stylish-btn text-xs py-1">Remove All</button></div></div><div id="downloads-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>';
       container.parentElement.appendChild(panel);
     }
     const dl = panel.querySelector('#downloads-list');
@@ -74,6 +74,38 @@
   i18n.speak('Lesson removed from offline.', { category: 'system' });
     }
     renderDownloads();
+  });
+
+  // Bulk actions
+  document.addEventListener('click', (e)=>{
+    const dlAll = e.target.closest('#dl-all');
+    const rmAll = e.target.closest('#rm-all');
+    if (!dlAll && !rmAll) return;
+    if (dlAll){
+      dlAll.setAttribute('disabled','true'); dlAll.textContent='Downloading…';
+      const allUrls = LESSONS.flatMap(urlsFor);
+      cacheUrls(allUrls);
+      LESSONS.forEach(id=>localStorage.setItem(`lesson_cached_${id}`,'1'));
+      i18n.speak('All lessons downloaded for offline.', { category: 'system' });
+      setTimeout(()=>{ dlAll.removeAttribute('disabled'); dlAll.textContent='Download All'; }, 600);
+    }
+    if (rmAll){
+      rmAll.setAttribute('disabled','true'); rmAll.textContent='Removing…';
+      const allUrls = LESSONS.flatMap(urlsFor);
+      uncacheUrls(allUrls);
+      LESSONS.forEach(id=>localStorage.removeItem(`lesson_cached_${id}`));
+      i18n.speak('All lessons removed from offline.', { category: 'system' });
+      setTimeout(()=>{ rmAll.removeAttribute('disabled'); rmAll.textContent='Remove All'; }, 400);
+    }
+    renderDownloads();
+  });
+
+  // Listen for SW cache confirmations to refresh UI
+  navigator.serviceWorker?.addEventListener?.('message', (event)=>{
+    const data = event.data || {};
+    if (data.type==='CACHE_DONE' || data.type==='UNCACHE_DONE'){
+      renderDownloads();
+    }
   });
 
   document.addEventListener('DOMContentLoaded', renderDownloads);

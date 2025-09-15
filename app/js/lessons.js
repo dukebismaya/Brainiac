@@ -84,6 +84,7 @@
     let correctCount = 0;
     bank.forEach((q,i)=>{ if (state.answers[i] === q.correct) correctCount++; });
     const uid = window.Gamification?.currentUserId()||'guest';
+    if (window.Gamification?.setLastOpenedLesson) window.Gamification.setLastOpenedLesson(uid, state.lessonId);
     window.Gamification?.completeLesson(uid, state.lessonId, correctCount, bank.length);
     // Fire an explicit event to force immediate UI refresh
     try{ window.dispatchEvent(new CustomEvent('gamification:lesson', { detail: { userId: uid, lessonId: state.lessonId, score: correctCount, total: bank.length }})); }catch(e){}
@@ -96,6 +97,9 @@
     state = { lessonId, idx:0, answers:[], score:0, total:0 };
     document.getElementById('lesson-quiz-title').textContent = `Quiz: ${lessonId}`;
     document.getElementById('lesson-quiz-modal').style.display='flex';
+    const uid = window.Gamification?.currentUserId()||'guest';
+    if (window.Gamification?.setLastOpenedLesson) window.Gamification.setLastOpenedLesson(uid, lessonId);
+    try{ window.dispatchEvent(new CustomEvent('gamification:continue', { detail: { userId: uid, lessonId }})); }catch(e){}
     renderQuestion();
   }
   function close(){ const m=document.getElementById('lesson-quiz-modal'); if(m){m.style.display='none';} }
