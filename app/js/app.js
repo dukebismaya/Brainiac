@@ -82,7 +82,8 @@
       entries.forEach(ent=>{ if (ent.isIntersecting){ ent.target.classList.add('visible'); io.unobserve(ent.target); } });
     }, { threshold: 0.1 });
     // Auto-mark common containers as reveal for sleek entrance
-    document.querySelectorAll('.portal-card, .glass-container').forEach(el=> el.classList.add('reveal'));
+    // Remove this to make the glow effect more subtle
+    // document.querySelectorAll('.portal-card, .glass-container').forEach(el=> el.classList.add('reveal'));
     document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
   }
   document.addEventListener('DOMContentLoaded', initReveal);
