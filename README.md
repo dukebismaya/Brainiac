@@ -15,7 +15,7 @@ A learning platform for Students. Works offline with a Service Worker and app ma
 Use any static server from the `app` directory. On Windows PowerShell:
 
 ```pwsh
-cd ..\brainiac\app
+cd ..\brainiac\
 # Python
 python -m http.server 8080
 # Or Node http-server
