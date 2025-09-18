@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#4f46e5" />
+    <title>Brainiac - Student Portal</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/feathericons/feather/icons/cpu.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script defer src="js/app.js"></script>
+    <script defer src="js/auth.js"></script>
+    <script defer src="js/i18n.js"></script>
+    <script defer src="js/gamification.js"></script>
+    <script defer src="js/lessons.js"></script>
+    <script defer src="js/gyani.js"></script>
+    <script defer src="js/doubts.js"></script>
+    <script defer src="js/offline.js"></script>
+  </head>
+  <body class="dark:text-gray-200 text-gray-800">
+    <div class="background-ripples">
+      <div class="ripple r1"></div>
+      <div class="ripple r2"></div>
+      <div class="ripple r3"></div>
+    </div>
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl relative z-10">
+      <header class="flex justify-between items-center mb-8">
+        <div class="typewriter">
+          <a href="index.html" class="inline-block">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white inline">Brainiac</h1>
+          </a>
+          <span id="logo-cursor" class="text-2xl md:text-3xl font-extrabold">|</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="index.html" class="stylish-btn text-sm py-2">Home</a>
+          <a href="games.html" class="stylish-btn text-sm py-2">Games</a>
+          <a href="teacher.html" class="stylish-btn text-sm py-2 only-student">Teacher</a>
+          <button data-action="switch-role" class="stylish-btn text-sm py-2" title="Switch Role">Switch Role</button>
+          <div id="theme-icon-container" class="cursor-pointer" title="Toggle Theme">
+            <svg id="sun-icon" class="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <svg id="moon-icon" class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </div>
+          <div class="relative">
+            <button id="language-switcher-btn" class="flex items-center space-x-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm">
+              <i class="fa-solid fa-globe"></i>
+              <span id="lang-btn-text">English</span>
+            </button>
+            <select id="language-switcher" class="absolute inset-0 opacity-0 cursor-pointer">
+              <option value="en">English</option>
+              <option value="hi">हिन्दी</option>
+            </select>
+          </div>
+          <div id="auth-menu"></div>
+        </div>
+      </header>
+
+      <main>
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 id="student-welcome-title" class="text-3xl font-bold mb-2 gradient-text">Welcome, Learner!</h2>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">Your personalized learning journey starts here.</p>
+            <div id="continue-cta" class="hidden mt-2">
+              <button id="continue-btn" class="stylish-btn text-sm py-2"><i class="fa-solid fa-play"></i><span class="ml-2">Continue: <span id="continue-label">—</span></span></button>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="tts-toggle" class="stylish-btn text-sm py-2" aria-pressed="false" title="Toggle Text-to-Speech">
+              <i class="fa-solid fa-volume-xmark"></i>
+              <span class="hidden sm:inline">TTS Off</span>
+            </button>
+            <div class="relative">
+              <button id="tts-menu-btn" class="stylish-btn text-sm py-2" title="TTS Preferences"><i class="fa-solid fa-sliders"></i></button>
+              <div id="tts-menu" class="hidden absolute right-0 top-full mt-2 w-56 glass-container rounded-xl p-3 z-50">
+                <p class="text-xs text-slate-400 mb-2">Speak categories</p>
+                <label class="flex items-center justify-between text-sm py-1">
+                  <span>Chat</span>
+                  <input id="tts-cat-chat" type="checkbox" class="h-4 w-4" />
+                </label>
+                <label class="flex items-center justify-between text-sm py-1">
+                  <span>Lessons</span>
+                  <input id="tts-cat-lessons" type="checkbox" class="h-4 w-4" />
+                </label>
+                <label class="flex items-center justify-between text-sm py-1">
+                  <span>Games</span>
+                  <input id="tts-cat-games" type="checkbox" class="h-4 w-4" />
+                </label>
+                <label class="flex items-center justify-between text-sm py-1">
+                  <span>System</span>
+                  <input id="tts-cat-system" type="checkbox" class="h-4 w-4" />
+                </label>
+              </div>
+            </div>
+            <button id="profile-btn" class="stylish-btn text-sm py-2" title="Profile"><i class="fa-solid fa-user"></i><span class="hidden sm:inline ml-1">Profile</span></button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-star text-yellow-400 text-3xl"></i><div><p class="text-gray-400 text-sm">XP Points</p><p id="student-xp" class="text-2xl font-bold dark:text-white">0</p></div></div>
+          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-fire text-orange-500 text-3xl"></i><div><p class="text-gray-400 text-sm">Daily Streak</p><p id="student-streak" class="text-2xl font-bold dark:text-white">0 Days</p></div></div>
+          <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i class="fa-solid fa-trophy text-purple-400 text-3xl"></i><div><p class="text-gray-400 text-sm">Badges Earned</p><p id="student-badges" class="text-2xl font-bold dark:text-white">0</p></div></div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-2xl font-bold gradient-text">Your Learning Path</h3>
+            <div class="flex items-center space-x-2">
+              <label class="text-sm text-gray-400">Grade</label>
+              <select id="grade-filter" class="cool-input bg-transparent border border-slate-700 rounded px-3 py-1 text-sm">
+                <option value="all">All</option>
+                <option value="6-7">6-7</option>
+                <option value="8-9">8-9</option>
+                <option value="10-12">10-12</option>
+              </select>
+            </div>
+          </div>
+          <div id="learning-path-container" class="space-y-4"></div>
+          <div id="leaderboard" class="glass-container rounded-xl p-4 mt-6">
+            <h4 class="font-bold mb-3">Local Leaderboard</h4>
+            <ol id="leaderboard-list" class="list-decimal pl-5 text-sm text-gray-300"></ol>
+          </div>
+          <div id="badges-panel" class="glass-container rounded-xl p-4 mt-6">
+            <h4 class="font-bold mb-3">Badges</h4>
+            <div id="badges-grid"></div>
+          </div>
+          <div id="offline-downloads" class="glass-container rounded-xl p-4 mt-6">
+            <h4 class="font-bold mb-3">Offline Lessons</h4>
+            <div id="downloads-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+          </div>
+          <div id="doubts-panel" class="glass-container rounded-xl p-4 mt-6">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-bold">Doubts</h4>
+              <div class="flex items-center gap-2">
+                <div class="hidden sm:flex items-center gap-1 text-xs" id="doubt-filters">
+                  <button class="chip" data-dfilter="all">All</button>
+                  <button class="chip" data-dfilter="open">Open</button>
+                  <button class="chip" data-dfilter="answered">Answered</button>
+                  <button class="chip" data-dfilter="mine">Mine</button>
+                </div>
+                <div class="space-x-2 text-xs">
+                  <button id="doubt-ask-ai" class="stylish-btn py-1"><i class="fa-solid fa-robot mr-1"></i>Ask AI</button>
+                  <button id="doubt-refresh" class="stylish-btn py-1"><i class="fa-solid fa-rotate mr-1"></i>Refresh</button>
+                </div>
+              </div>
+            </div>
+            <form id="doubt-form" class="space-y-3">
+              <div class="input-group"><i class="fa-solid fa-circle-question input-icon"></i><input type="text" id="doubt-title" class="cool-input" placeholder=" "><label for="doubt-title" class="cool-label">Your question</label></div>
+              <div class="input-group"><i class="fa-solid fa-book input-icon"></i><input type="text" id="doubt-topic" class="cool-input" placeholder=" "><label for="doubt-topic" class="cool-label">Topic (optional)</label></div>
+              <button type="submit" class="stylish-btn text-sm"><i class="fa-solid fa-paper-plane mr-1"></i>Post Doubt</button>
+            </form>
+            <div id="doubts-list" class="mt-4 space-y-2"></div>
+          </div>
+
+          <!-- Doubt Detail Modal -->
+          <div id="doubt-modal" class="game-modal">
+            <div class="modal-card w-full max-w-2xl">
+              <header>
+                <h5 id="doubt-modal-title" class="text-lg font-bold">Doubt</h5>
+                <button id="doubt-modal-close" class="stylish-btn text-xs py-1">Close</button>
+              </header>
+              <div class="glow-divider mb-2"></div>
+              <div id="doubt-modal-body" class="space-y-3">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Profile Modal -->
+      <div id="profile-modal" class="game-modal" style="display:none;">
+        <div class="modal-card text-left w-full max-w-md mx-4">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold">Your Profile</h3>
+            <button id="profile-close" class="stylish-btn">Close</button>
+          </div>
+          <div class="flex items-center mb-4">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-indigo-500 to-fuchsia-500 flex items-center justify-center text-2xl mr-4" id="profile-avatar">👩‍🎓</div>
+            <div>
+              <div class="font-semibold" id="profile-username">Guest</div>
+              <div class="text-sm text-gray-400">Level <span id="profile-level">1</span> • <span id="profile-xp">0</span> XP</div>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-2">Badges</h4>
+            <div id="profile-badges" class="grid grid-cols-3 gap-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="text-center mt-12 text-gray-500 text-sm">© 2025 The Fractals<sup>TM</sup>. All Rights Reserved.</footer>
+    </div>
+  </body>
+</html>

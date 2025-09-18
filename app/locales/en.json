@@ -1,0 +1,25 @@
+{
+  "brand_name": "Brainiac",
+  "nav_games": "Games",
+  "nav_teacher": "Teacher",
+  "nav_lang_english": "English",
+  "nav_lang_hindi": "हिन्दी",
+
+  "slogan": "BrainiacSTEM - Empowering Futures",
+  "welcome_title": "Welcome to Brainiac Platform",
+  "welcome_subtitle": "Empowering rural learners with interactive games, progress tracking, and motivating achievement badges.",
+
+  "student_portal_title": "Student Portal",
+  "student_portal_desc": "Interactive lessons, XP rewards & mini challenges to accelerate learning.",
+  "student_portal_cta": "Explore",
+
+  "games_portal_title": "Games Hub",
+  "games_portal_desc": "Math puzzles & memory games build core STEM skills through play.",
+  "games_portal_cta": "Play",
+
+  "teacher_portal_title": "Teacher Portal",
+  "teacher_portal_desc": "Monitor progress, analyze engagement, celebrate achievements.",
+  "teacher_portal_cta": "Open",
+
+  "footer_rights": "© 2025 The Fractals™. All Rights Reserved."
+}

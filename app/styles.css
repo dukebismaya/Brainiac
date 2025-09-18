@@ -1,0 +1,405 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    /* Light mode bg */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background 0.5s ease-in-out;
+    /* Smooth transition for theme change */
+}
+
+.dark body {
+    background-color: #000;
+    /* Pure black background */
+}
+
+/* Dynamic Ripple Background */
+.background-ripples {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    /* Behind content */
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.5;
+    filter: blur(80px);
+    /* Soft blur effect */
+}
+
+.r1 {
+    width: 50vmax;
+    height: 50vmax;
+    background: rgba(0, 255, 255, 0.2);
+    /* Cyan */
+    animation: move-ripple 25s linear infinite;
+}
+
+.r2 {
+    width: 40vmax;
+    height: 40vmax;
+    background: rgba(79, 70, 229, 0.2);
+    /* Indigo */
+    animation: move-ripple 30s linear infinite -10s;
+    /* offset animation */
+}
+
+.r3 {
+    width: 30vmax;
+    height: 30vmax;
+    background: rgba(167, 139, 250, 0.2);
+    /* Violet */
+    animation: move-ripple 20s linear infinite -5s;
+}
+
+@keyframes move-ripple {
+    0% {
+        transform: translate(10vw, 80vh) scale(1);
+    }
+
+    25% {
+        transform: translate(80vw, 10vh) scale(0.8);
+    }
+
+    50% {
+        transform: translate(50vw, 90vh) scale(1.2);
+    }
+
+    75% {
+        transform: translate(20vw, 20vh) scale(1.1);
+    }
+
+    100% {
+        transform: translate(10vw, 80vh) scale(1);
+    }
+}
+
+
+/* Page transition animation */
+.page {
+    display: none;
+    animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Awesome 3D Card Style --- */
+.portal-card {
+    border-radius: 1.75rem;
+    /* 28px */
+    cursor: pointer;
+    position: relative;
+    background: transparent;
+    /* Changed for glassmorphism */
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    overflow: hidden;
+    /* Moved here to prevent clipping */
+}
+
+.portal-card-content {
+    background: #1e293b;
+    border-radius: 1.6rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+.dark .portal-card-content {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Shine effect */
+.portal-card-content::before {
+    content: '';
+    position: absolute;
+    top: var(--shine-y, -150px);
+    left: var(--shine-x, -150px);
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.portal-card:hover .portal-card-content::before {
+    opacity: 1;
+}
+
+.light .portal-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s;
+}
+
+.light .portal-card:hover {
+    box-shadow: 0 0 35px rgba(99, 102, 241, 0.25);
+    transform: translateY(-4px);
+}
+
+.portal-card .fa-solid {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #c4b5fd;
+    height: 4rem;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s;
+    /* Smooth icon movement */
+}
+
+.portal-card-content h3,
+.portal-card-content p,
+.portal-card-content button {
+    transition: transform 0.3s;
+    /* Smooth text/button movement */
+}
+
+
+/* Glassmorphism for other containers */
+.dark .glass-container {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Option button styling */
+.option-btn {
+    @apply w-full p-4 bg-gray-100 dark:bg-slate-700 rounded-lg text-left transition-all duration-200 transform hover:scale-105 hover:bg-blue-100 dark:hover:bg-blue-900;
+}
+
+.option-btn.correct {
+    @apply bg-green-500 text-white font-bold;
+}
+
+.option-btn.incorrect {
+    @apply bg-red-500 text-white font-bold;
+}
+
+.option-btn:disabled {
+    @apply opacity-70 cursor-not-allowed;
+}
+
+/* Cute pop animation for the score */
+.score-pop {
+    animation: pop 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes pop {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+/* Animated theme icon */
+#theme-icon-container svg {
+    display: none;
+    animation: spin-in 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+html:not(.dark) #sun-icon {
+    display: block;
+}
+
+.dark #moon-icon {
+    display: block;
+}
+
+@keyframes spin-in {
+    from {
+        transform: rotate(-180deg) scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Typewriter cursor */
+#logo-cursor {
+    animation: blink-caret 1s step-end infinite;
+    color: orange;
+}
+
+@keyframes blink-caret {
+
+    from,
+    to {
+        color: transparent
+    }
+
+    50% {
+        color: orange;
+    }
+}
+
+/* --- RESTYLIZED COOL FORMS --- */
+.input-group {
+    position: relative;
+}
+
+.input-group .input-icon {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300;
+}
+
+.cool-input {
+    @apply w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-base text-white placeholder-transparent transition-colors duration-300 focus:outline-none focus:border-indigo-500;
+    -webkit-appearance: none;
+}
+
+.input-group .cool-label {
+    @apply absolute left-10 top-3.5 text-slate-400 text-base transition-all duration-300 pointer-events-none;
+}
+
+.cool-input:focus+.cool-label,
+.cool-input:not(:placeholder-shown)+.cool-label {
+    @apply -top-2 left-8 text-indigo-400 text-xs bg-slate-900 px-1;
+}
+
+.cool-input:focus~.input-icon {
+    @apply text-indigo-400;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper .fa-chevron-down {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none;
+}
+
+
+/* Student Portal & Games Hub & Teacher Portal Specific Styles */
+.learning-path-item.locked,
+.game-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.learning-path-item.locked .start-btn,
+.game-card.locked button {
+    background-color: #4a5568;
+    cursor: not-allowed;
+}
+
+.stylish-btn {
+    @apply inline-flex items-center space-x-2 px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full transition-all duration-300 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/30 transform hover:-translate-y-0.5;
+}
+
+.custom-file-btn {
+    @apply inline-flex items-center space-x-2 px-4 py-2 bg-slate-700/80 border border-slate-600 text-white text-sm font-semibold rounded-lg cursor-pointer transition-all duration-300 hover:bg-slate-700 hover:border-indigo-500;
+}
+
+/* Teacher Portal Tabs */
+.tab-btn {
+    @apply w-full text-center py-2.5 rounded-lg text-sm font-semibold transition-colors duration-300 text-gray-400;
+}
+
+.tab-btn.active {
+    @apply bg-indigo-600 text-white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+/* Speed Arithmetic Game Styles */
+#speed-arithmetic-modal {
+    display: none;
+}
+
+#speed-arithmetic-modal.active {
+    display: flex;
+}
+
+#game-problem {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+#game-answer {
+    text-align: center;
+    font-size: 2rem;
+}
+
+/* Student Report Modal */
+#student-report-modal {
+    display: none;
+}
+
+#student-report-modal.active {
+    display: flex;
+}
+
+/* Offline banner */
+.offline-banner {
+    position: fixed;
+    top: -60px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    background: #b45309;
+    /* amber-700 */
+    color: #fff7ed;
+    /* amber-50 */
+    font-weight: 600;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    transition: top 0.3s ease;
+}
+
+.offline-banner.show {
+    top: 0;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#4f46e5" />
+  <title>Brainiac - Teacher Portal</title>
+  <link rel="manifest" href="manifest.json" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/auth.js"></script>
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/teacher.js"></script>
+  <script defer src="js/charts.js"></script>
+  <script defer src="js/doubts.js"></script>
+  <script defer src="js/gyani.js"></script>
+  <script defer src="js/offline.js"></script>
+</head>
+
+<body class="dark:text-gray-200 text-gray-800">
+  <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+    <header class="flex justify-between items-center mb-8">
+      <h1 class="text-2xl md:text-3xl font-extrabold gradient-text">Teacher Portal</h1>
+      <nav class="space-x-2">
+        <a href="#" data-back="history" class="stylish-btn text-sm py-2">Back</a>
+        <a href="index.html" class="stylish-btn text-sm py-2">Home</a>
+        <a href="games.html" class="stylish-btn text-sm py-2">Games</a>
+        <a href="student.html" class="stylish-btn text-sm py-2 only-teacher">Student</a>
+        <button data-action="switch-role" class="stylish-btn text-sm py-2" title="Switch Role">Switch Role</button>
+        <span id="theme-icon-container" class="inline-block cursor-pointer align-middle ml-2" title="Toggle Theme">
+          <svg id="sun-icon" class="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a 4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg id="moon-icon" class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </span>
+        <span id="auth-menu" class="inline-block align-middle ml-2"></span>
+      </nav>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i
+          class="fa-solid fa-chart-line text-green-400 text-3xl"></i>
+        <div>
+          <p class="text-gray-400 text-sm">Average Score</p>
+          <p id="class-avg-score" class="text-2xl font-bold dark:text-white">0%</p>
+        </div>
+      </div>
+      <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i
+          class="fa-solid fa-check-double text-blue-400 text-3xl"></i>
+        <div>
+          <p class="text-gray-400 text-sm">Completion Rate</p>
+          <p id="class-completion-rate" class="text-2xl font-bold dark:text-white">0%</p>
+        </div>
+      </div>
+      <div class="glass-container rounded-xl p-4 flex items-center space-x-4"><i
+          class="fa-solid fa-clock text-yellow-400 text-3xl"></i>
+        <div>
+          <p class="text-gray-400 text-sm">Avg. Time Spent</p>
+          <p id="class-avg-time" class="text-2xl font-bold dark:text-white">0 min</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="lg:col-span-2">
+        <h3 class="text-2xl font-bold mb-4 dark:text-white">Class Roster</h3>
+        <div id="student-list-container" class="glass-container rounded-xl p-4 space-y-2"></div>
+        <div class="glass-container rounded-xl p-4 mt-6">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-2xl font-bold dark:text-white">Student Doubts</h3>
+            <div class="hidden sm:flex items-center gap-1 text-xs" id="teacher-doubt-filters">
+              <button class="chip" data-tdfilter="all">All</button>
+              <button class="chip" data-tdfilter="open">Open</button>
+              <button class="chip" data-tdfilter="answered">Answered</button>
+              <button class="chip" data-tdfilter="mine">Mine</button>
+            </div>
+          </div>
+          <div id="teacher-doubts-list" class="space-y-2"></div>
+        </div>
+
+        <!-- Doubt Detail Modal (shared style) -->
+        <div id="teacher-doubt-modal" class="game-modal">
+          <div class="modal-card w-full max-w-2xl">
+            <header>
+              <h5 id="teacher-doubt-modal-title" class="text-lg font-bold">Doubt</h5>
+              <button id="teacher-doubt-modal-close" class="stylish-btn text-xs py-1">Close</button>
+            </header>
+            <div class="glow-divider mb-2"></div>
+            <div id="teacher-doubt-modal-body" class="space-y-3"></div>
+          </div>
+        </div>
+      </div>
+      <div id="teacher-tools-container">
+        <div class="flex justify-end items-center mb-2">
+          <button id="export-csv-btn" class="stylish-btn text-xs py-1"><i class="fa-solid fa-file-csv mr-1"></i>Export
+            CSV</button>
+          <button id="award-top-btn" class="stylish-btn text-xs py-1 ml-2"><i class="fa-solid fa-trophy mr-1"></i>Award
+            Top</button>
+        </div>
+        <div class="flex space-x-1 glass-container rounded-t-xl p-1 mb-0">
+          <button class="tab-btn active" data-tab="assign"><i class="fa-solid fa-paper-plane mr-2"></i>Assign
+            Content</button>
+          <button class="tab-btn" data-tab="create"><i class="fa-solid fa-plus-circle mr-2"></i>Create Lesson</button>
+        </div>
+        <div class="glass-container rounded-b-xl p-6">
+          <div id="assign-tab" class="tab-content active">
+            <div class="space-y-8">
+              <div class="input-group select-wrapper"><i class="fa-solid fa-book-open-reader input-icon"></i><select
+                  id="assign-lesson-select" class="cool-input" required></select><label for="assign-lesson-select"
+                  class="cool-label">Select Lesson</label><i class="fa-solid fa-chevron-down"></i></div>
+              <div class="input-group select-wrapper"><i class="fa-solid fa-users input-icon"></i><select
+                  id="assign-group-select" class="cool-input" required>
+                  <option value="all">Entire Class</option>
+                  <option value="struggling">Struggling Students</option>
+                </select><label for="assign-group-select" class="cool-label">Select Group</label><i
+                  class="fa-solid fa-chevron-down"></i></div>
+              <button id="assign-content-btn" class="w-full stylish-btn justify-center text-sm"><i
+                  class="fa-solid fa-paper-plane"></i><span>Push Module</span></button>
+            </div>
+          </div>
+          <div id="create-tab" class="tab-content">
+            <form id="create-lesson-form" class="space-y-8">
+              <div class="input-group"><i class="fa-solid fa-pencil input-icon"></i><input type="text" id="create-title"
+                  class="cool-input" placeholder=" "><label for="create-title" class="cool-label">Lesson Title</label>
+              </div>
+              <div class="input-group"><i class="fa-solid fa-align-left input-icon"></i><textarea id="create-content"
+                  class="cool-input" placeholder=" " rows="2"></textarea><label for="create-content"
+                  class="cool-label">Lesson Content</label></div>
+              <div><label for="create-file-input" class="custom-file-btn"><i class="fa-solid fa-upload"></i><span>Upload
+                    PDF/Audio</span></label><input type="file" id="create-file-input" class="hidden"><span
+                  id="file-name-display" class="ml-3 text-sm text-gray-400 align-middle">No file chosen.</span></div>
+              <div class="pt-6 border-t border-slate-800">
+                <p class="text-sm font-semibold text-gray-300 mb-4">Add a quick quiz question:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div class="input-group"><i class="fa-solid fa-question input-icon"></i><input type="text"
+                      id="create-q" class="cool-input" placeholder=" "><label for="create-q" class="cool-label">Quiz
+                      Question</label></div>
+                  <div class="input-group"><i class="fa-solid fa-check input-icon"></i><input type="text" id="create-a"
+                      class="cool-input" placeholder=" "><label for="create-a" class="cool-label">Correct Answer</label>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="w-full stylish-btn justify-center text-sm"><i
+                  class="fa-solid fa-save"></i><span>Save Lesson</span></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
