@@ -904,14 +904,69 @@ body.modal-open {
         linear-gradient(135deg, #86efac, #4ade80, #22c55e);
     color: #064e3b;
     box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
-    transition: all 0.3s ease;
+    border-radius: 30px; /* liquid morph base */
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .btn-explore:hover {
     background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.25), transparent 40%),
         linear-gradient(135deg, #bbf7d0, #86efac, #4ade80);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(22, 163, 74, 0.55);
+    border-radius: 12px; /* morph */
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 24px rgba(22, 163, 74, 0.55);
+}
+
+/* Liquid glow pseudo-element */
+.btn-explore,
+.btn-play,
+.btn-open {
+        position: relative;
+        isolation: isolate; /* contain the glow */
+}
+
+.btn-explore::after,
+.btn-play::after,
+.btn-open::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: inherit;
+        background: radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,0.25), rgba(255,255,255,0) 70%), var(--btn-liquid-bg, transparent);
+        filter: blur(10px);
+        opacity: 0;
+        transform: scale(0.98);
+        transition: opacity .4s ease, transform .4s ease, filter .4s ease;
+        z-index: -1;
+}
+
+.btn-explore:hover::after,
+.btn-play:hover::after,
+.btn-open:hover::after {
+        opacity: 1;
+        transform: scale(1.03);
+        filter: blur(14px);
+        animation: blobWobble 2.4s ease-in-out infinite;
+}
+
+/* Themed liquid tints per button */
+.btn-explore { --btn-liquid-bg: linear-gradient(135deg, rgba(34,197,94,.35), rgba(16,185,129,.25)); }
+.btn-play    { --btn-liquid-bg: linear-gradient(135deg, rgba(249,115,22,.35), rgba(245,158,11,.25)); }
+.btn-open    { --btn-liquid-bg: linear-gradient(135deg, rgba(59,130,246,.35), rgba(147,197,253,.25)); }
+
+@keyframes blobWobble {
+    0%   { transform: scale(1.03) translate(0, 0); }
+    25%  { transform: scale(1.04) translate(1px, -1px); }
+    50%  { transform: scale(1.02) translate(-1px, 1px); }
+    75%  { transform: scale(1.035) translate(1px, 1px); }
+    100% { transform: scale(1.03) translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-explore:hover::after,
+    .btn-play:hover::after,
+    .btn-open:hover::after {
+        animation: none;
+    }
 }
 
 /* Play Button */
@@ -920,14 +975,16 @@ body.modal-open {
         linear-gradient(135deg, #fdba74, #fb923c, #f97316);
     color: #7c2d12;
     box-shadow: 0 4px 12px rgba(249, 115, 22, 0.35);
-    transition: all 0.3s ease;
+    border-radius: 30px; /* liquid morph base */
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .btn-play:hover {
     background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.25), transparent 40%),
         linear-gradient(135deg, #fed7aa, #fdba74, #fb923c);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(234, 88, 12, 0.55);
+    border-radius: 12px; /* morph */
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 24px rgba(234, 88, 12, 0.55);
 }
 
 /* Open Button */
@@ -936,14 +993,16 @@ body.modal-open {
         linear-gradient(135deg, #93c5fd, #60a5fa, #3b82f6);
     color: #1e3a8a;
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
-    transition: all 0.3s ease;
+    border-radius: 30px; /* liquid morph base */
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .btn-open:hover {
     background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.25), transparent 40%),
         linear-gradient(135deg, #bfdbfe, #93c5fd, #60a5fa);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.55);
+    border-radius: 12px; /* morph */
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.55);
 }
 
 
@@ -1012,6 +1071,32 @@ body.modal-open {
 
 .glow-pulse {
     animation: glowPulse 2s infinite;
+}
+
+/* Navbar pulse button effect (brand-colored, gentle) */
+.btn-pulse:hover {
+    animation: navPulse 1.35s ease-in-out infinite;
+}
+
+@keyframes navPulse {
+    0% {
+        transform: translateY(-2px) scale(1);
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.55);
+    }
+    70% {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 0 0 12px rgba(79, 70, 229, 0);
+    }
+    100% {
+        transform: translateY(-2px) scale(1);
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-pulse:hover {
+        animation: none;
+    }
 }
 
 /* Tilt effect base */

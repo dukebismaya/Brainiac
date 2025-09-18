@@ -5,7 +5,16 @@
     const uid = (window.Gamification?.currentUserId && window.Gamification.currentUserId()) || 'guest';
     const s = window.Gamification?.getUserSummary ? window.Gamification.getUserSummary(uid) : null;
     if (!s) return true;
-    const map = { 'speed-arithmetic':'math-1', 'memory-match':'chemistry-1', 'ohms-law':'physics-1' };
+    const map = {
+      'speed-arithmetic':'math-1',
+      'memory-match':'chemistry-1',
+      'ohms-law':'physics-1',
+      'projectile-motion':'physics-1',
+      'equation-balancer':'chemistry-1',
+      'logic-truth-table':'math-1',
+      'shortest-path':'math-1',
+      'calculus-derivative':'math-1'
+    };
     const lessonId = map[gameId];
     const item = s.learningPath.find(l=>l.id===lessonId);
     return item ? item.status !== 'locked' : true;
@@ -15,6 +24,11 @@
     const container = document.getElementById('games-container');
     if (!container) return;
     const games = [
+      { id: 'projectile-motion', title: 'Projectile Motion', icon: 'fa-parachute-box', color:'text-indigo-400', description: 'Compute range, time of flight, or max height given v₀, θ, g.' },
+      { id: 'equation-balancer', title: 'Equation Balancer', icon: 'fa-flask', color:'text-emerald-400', description: 'Balance real chemical equations by choosing correct coefficients.' },
+      { id: 'logic-truth-table', title: 'Logic Truth Table', icon: 'fa-diagram-project', color:'text-cyan-400', description: 'Fill the truth table for a given boolean expression.' },
+      { id: 'shortest-path', title: 'Shortest Path', icon: 'fa-route', color:'text-rose-400', description: 'Find the shortest distance on a weighted graph (Dijkstra).' },
+      { id: 'calculus-derivative', title: 'Derivative Challenge', icon: 'fa-square-root-variable', color:'text-fuchsia-400', description: "Compute f'(x₀) for a given function." },
       { id: 'speed-arithmetic', title: 'Speed Arithmetic', icon: 'fa-calculator', color:'text-purple-400', description: 'Solve math problems against the clock!' },
       { id: 'memory-match', title: 'Memory Match', icon: 'fa-brain', color:'text-emerald-400', description: 'Flip cards to match element symbols quickly.' },
       { id: 'ohms-law', title: "Ohm's Law", icon: 'fa-bolt', color:'text-amber-400', description: 'Find V=IR. Compute voltage, current, or resistance.' }
@@ -45,6 +59,16 @@
       if (window.MemoryMatch?.open) window.MemoryMatch.open();
     } else if (id === 'ohms-law'){
       if (window.OhmsLaw?.open) window.OhmsLaw.open();
+    } else if (id === 'projectile-motion'){
+      if (window.ProjectileMotion?.open) window.ProjectileMotion.open();
+    } else if (id === 'equation-balancer'){
+      if (window.EquationBalancer?.open) window.EquationBalancer.open();
+    } else if (id === 'logic-truth-table'){
+      if (window.LogicTruthTable?.open) window.LogicTruthTable.open();
+    } else if (id === 'shortest-path'){
+      if (window.ShortestPath?.open) window.ShortestPath.open();
+    } else if (id === 'calculus-derivative'){
+      if (window.CalculusDerivative?.open) window.CalculusDerivative.open();
     }
   }
 

@@ -7,7 +7,7 @@
   - Auto-updates via skipWaiting/clients.claim
 */
 
-const VERSION = 'v1.2.0';
+const VERSION = 'v1.3.1';
 const PRECACHE = `precache-${VERSION}`;
 const RUNTIME = `runtime-${VERSION}`;
 
@@ -30,6 +30,12 @@ const PRECACHE_URLS = [
   './js/doubts.js',
   './js/offline.js',
   './js/charts.js',
+  // Advanced STEM game modules
+  './games/projectile-motion.js',
+  './games/equation-balancer.js',
+  './games/logic-truth-table.js',
+  './games/shortest-path.js',
+  './games/calculus-derivative.js',
   './manifest.json',
   './locales/en.json',
   './locales/hi.json'
